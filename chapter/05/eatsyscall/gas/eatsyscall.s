@@ -8,19 +8,16 @@
 # $ zig build-obj eatsyscall.s
 # $ zig build-exe eatsyscall.o
 
-#.data
+.rodata
 
 EatMsg: .ascii "Eat at Joe's!\n"
 EatLen = . - EatMsg
 
-#.bss
-
-#.text
+.text
 
 .global _start
 
 _start:
-#nop
 mov $1,%rax
 mov $1,%rdi
 mov $EatMsg,%rsi
