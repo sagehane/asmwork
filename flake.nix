@@ -2,35 +2,55 @@
   description = "Example code from Assembly Language Step By Step, Third Edition";
 
   inputs = {
-    zig-master = {
-      url = "github:jessestricker/zig-master.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    flake-utils.url = "github:numtide/flake-utils/v1.0.0";
+
+    zig = {
+      url = "github:mitchellh/zig-overlay";
+
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
     };
   };
 
-  outputs = { self, nixpkgs, zig-master }:
+  outputs =
+    { self
+    , nixpkgs
+    , flake-utils
+    , ...
+    } @ inputs:
     let
-      system = "x86_64-linux";
-
       overlays = [
-        (self: super: {
-          zig = zig-master.packages.${system}.zig;
+        (final: prev: {
+          zigpkgs = inputs.zig.packages.${prev.system};
         })
       ];
 
-      pkgs = import nixpkgs { inherit system overlays; };
+      #systems = builtins.attrNames inputs.zig.packages;
+      systems = [ "x86_64-linux" ];
     in
-    {
-      devShells.${system}.default = pkgs.mkShell {
-        nativeBuildInputs = with pkgs; [
-          fasmg
-          lldb
-          nasm
-          qemu
-          rr
-          wasmtime
-          zig
-        ];
-      };
-    };
+    flake-utils.lib.eachSystem systems (
+      system:
+      let
+        pkgs = import nixpkgs { inherit overlays system; };
+      in
+      {
+        devShells.default = pkgs.mkShellNoCC {
+          nativeBuildInputs = with pkgs; [
+            # master-2023-01-07 failed for some reason
+            zigpkgs.master-2023-01-06
+
+            binutils-unwrapped-all-targets
+            fasm-bin
+            lldb
+            nasm
+            qemu
+            rr
+            wasmtime
+          ];
+        };
+      }
+    );
 }

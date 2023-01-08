@@ -8,7 +8,7 @@ Planned targets include:
 - x86_64 (with NASM/GAS/flat assembler g)
   - GAS
   - NASM
-  - flat assembler g
+  - flat assembler
 - RISC-V 64
 - WebAssembly (text format with WASI)
 
@@ -21,7 +21,7 @@ Assemblers/Runtimes used:
 - [QEMU](https://www.qemu.org/) (For RISC-V 64)
 - [Wasmtime](https://wasmtime.dev/) (For WebAssembly text format with WASI)
 - [Zig](https://ziglang.org/) (For a cross-platform LLVM assembler and build system)
-- [flat assembler g](https://flatassembler.net/docs.php?article=fasmg)
+- [flat assembler](https://flatassembler.net/docs.php?article=manual)
 
 Debuggers:
 - [LLDB](https://lldb.llvm.org/)
