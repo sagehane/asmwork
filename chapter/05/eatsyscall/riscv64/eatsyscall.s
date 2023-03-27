@@ -3,10 +3,10 @@
 
 .rodata
 
-EatMsg: .string "Eat at Joe's!\n"
+EatMsg: .ascii "Eat at Joe's!\n" # No need for null bytes?
 # TODO: Figure out how to calculate offset at assembly-time
 #EatLen = . - EatMsg
-EatLen = 14
+EatLen = 14 # 15 with null bytes?
 
 .text
 

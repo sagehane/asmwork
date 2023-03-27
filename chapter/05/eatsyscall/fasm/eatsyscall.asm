@@ -9,7 +9,7 @@ segment executable ; .text
 
 entry $
         mov rax,1 ; sys_write
-        mov rdi,1 ; set fd to stdin
+        mov rdi,1 ; set fd to stdout
         mov rsi,EatMsg ; Address of the message
         mov rdx,EatLen ; Length of the message
         syscall
