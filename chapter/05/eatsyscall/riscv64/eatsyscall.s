@@ -1,12 +1,13 @@
 # $ zig build-exe -target riscv64-linux eatsyscall.s
 # $ qemu-riscv64 eatsyscall
 
-.rodata
+# `.section` directive for compatibility with GNU as
+.section .rodata
 
-EatMsg: .ascii "Eat at Joe's!\n" # No need for null bytes?
-# TODO: Figure out how to calculate offset at assembly-time
-#EatLen = . - EatMsg
-EatLen = 14 # 15 with null bytes?
+EatMsg: .ascii "Eat at Joe's!\n"
+# https://github.com/llvm/llvm-project/commit/d045f1d393317962251ba6dc58e3f8edc7e2fd99
+# Requires LLVM 17 or higher
+EatLen = . - EatMsg
 
 .text
 
@@ -16,7 +17,7 @@ _start:
 li a7,64
 li a0,1
 la a1,EatMsg
-li a2,EatLen
+li a2,Len
 ecall
 
 li a7,93
