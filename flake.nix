@@ -4,15 +4,6 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils/v1.0.0";
-
-    zig = {
-      url = "github:mitchellh/zig-overlay";
-
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
-      };
-    };
   };
 
   outputs =
@@ -39,9 +30,6 @@
       {
         devShells.default = pkgs.mkShellNoCC {
           nativeBuildInputs = with pkgs; [
-            # master-2023-01-07 failed for some reason
-            zigpkgs.master-2023-01-06
-
             binutils-unwrapped-all-targets
             fasm-bin
             lldb
@@ -49,6 +37,7 @@
             qemu
             rr
             wasmtime
+            zig_0_11
           ];
         };
       }
