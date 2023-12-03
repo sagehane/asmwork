@@ -17,7 +17,7 @@ _start:
 li a7,64
 li a0,1
 la a1,EatMsg
-li a2,Len
+li a2,EatLen
 ecall
 
 li a7,93
