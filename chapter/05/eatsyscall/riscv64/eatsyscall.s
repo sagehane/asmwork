@@ -1,4 +1,5 @@
-# $ zig build-exe -target riscv64-linux eatsyscall.s
+# $ llvm-mc --filetype=obj --arch=riscv64 eatsyscall.s -o eatsyscall.o
+# $ ld eatsyscall.o -o eatsyscall
 # $ qemu-riscv64 eatsyscall
 
 # `.section` directive for compatibility with GNU as
@@ -16,7 +17,8 @@ EatLen = . - EatMsg
 _start:
 li a7,64
 li a0,1
-la a1,EatMsg
+lui a1,%hi(EatMsg)
+addi a1,a1,%lo(EatMsg)
 li a2,EatLen
 ecall
 
