@@ -1,5 +1,8 @@
+# $ zig build-exe -target riscv64-linux eatsyscall.s
+
 # $ llvm-mc --filetype=obj --arch=riscv64 eatsyscall.s -o eatsyscall.o
 # $ ld eatsyscall.o -o eatsyscall
+
 # $ qemu-riscv64 eatsyscall
 
 # `.section` directive for compatibility with GNU as

@@ -1,5 +1,8 @@
+        # $ zig build-exe -target riscv64-linux uppercaser2.s
+
         # $ llvm-mc --arch=riscv32 --filetype=obj uppercaser2.s -o uppercaser2.o
         # $ ld.lld uppercaser2.o -o uppercaser2
+
         # $ qemu-riscv64 uppercaser2
 
         .bss
